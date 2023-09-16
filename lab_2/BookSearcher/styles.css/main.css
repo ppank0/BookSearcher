@@ -40,6 +40,12 @@ hr{
     /* min-width: 50px; */
     width: 30rem;
 }
+.search-icon{
+    transition: all 0.3s ease-in-out;
+}
+.search-icon:hover{
+    cursor: pointer;
+}
 input{
     width: -webkit-fill-available;
 }
@@ -81,6 +87,14 @@ input:hover{
     margin-top: 1rem;
     padding: 0 0.5rem;
     font-size: 22px;
+}
+
+#not-found-message{
+    
+    font-size: 25px;
+    padding: 3rem;
+    text-align: center;
+    color: #ffffffad;
 }
 
 
