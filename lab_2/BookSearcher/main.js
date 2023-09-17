@@ -3,6 +3,7 @@ const searchInput = document.getElementById('search-input');
 const booksContainer = document.getElementById('books-container');
 const notFoundElement = document.getElementById('not-found-message');
 const searchIcon = document.getElementById('search-icon');
+const footer = document.getElementById('footer');
 
 
 function displayBook(book) {
@@ -58,8 +59,15 @@ hideNotFoundMessage();
 searchInput.addEventListener('keydown', event => {
   if (event.key === 'Enter') {
     const searchQuery = searchInput.value;
+    
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&key=${apiKey}`)
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+        return response.json();
+      } else if (response.status === 400) {
+        showNotFoundMessage();
+      }
+    })
       .then(data => {
        
         booksContainer.innerHTML = '';
@@ -67,6 +75,7 @@ searchInput.addEventListener('keydown', event => {
         if (data.items && data.items.length > 0) {
           data.items.forEach(book => {
             displayBook(book);
+            footer.style.position = 'relative';
           });
 
           hideNotFoundMessage();
@@ -74,6 +83,7 @@ searchInput.addEventListener('keydown', event => {
         } else {
           showNotFoundMessage();
           hideBooksContainer();
+          footer.style.position='fixed';
         }
       })
       .catch(error => {
